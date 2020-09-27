@@ -1,5 +1,5 @@
-# Javascript Kata Coding repository
-
+# Javascript Kata Coding repository [![Build Status](https://travis-ci.com/fpineda3105/kata-coding.svg?branch=master)](https://travis-ci.com/fpineda3105/kata-coding)
+ 
 All the code here is tested
 
 To run all tehe tests:
