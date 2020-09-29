@@ -2,7 +2,7 @@
  
 All the Kata code here is tested
 
-To run all tehe tests:
+To run all the tests:
 ```bash
 yarn test 
 ```
