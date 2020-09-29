@@ -35,7 +35,6 @@
     }          
  }
  
-//consecutiveProdFbNumbers (714);
   //----- Test Cases ---//
 test('consecutiveProdFbNumbers of 714 should return [21, 34, true] ', () => {
     expect(consecutiveProdFbNumbers(714)).toStrictEqual([21, 34, true]);
