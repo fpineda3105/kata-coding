@@ -17,4 +17,4 @@ npm test
 - [Duplicate Encoder](https://www.codewars.com/kata/54b42f9314d9229fd6000d9c/)
 - [Which are in?](https://www.codewars.com/kata/550554fd08b86f84fe000a58/)
 - [Product of consecutive Fib numbers](https://www.codewars.com/kata/5541f58a944b85ce6d00006a/)
-- [Write Number in Expanded Form ](https://www.codewars.com/kata/5842df8ccbd22792a4000245)
+- [Write Number in Expanded Form](https://www.codewars.com/kata/5842df8ccbd22792a4000245)
