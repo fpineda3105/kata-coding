@@ -20,3 +20,4 @@ npm test
 - [Write Number in Expanded Form](https://www.codewars.com/kata/5842df8ccbd22792a4000245)
 - [First non-repeating character](https://www.codewars.com/kata/52bc74d4ac05d0945d00054e)
 - [Find the odd int](https://www.codewars.com/kata/54da5a58ea159efa38000836)
+- [Pagination Helper](https://www.codewars.com/kata/515bb423de843ea99400000a)
