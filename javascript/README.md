@@ -19,3 +19,4 @@ npm test
 - [Product of consecutive Fib numbers](https://www.codewars.com/kata/5541f58a944b85ce6d00006a/)
 - [Write Number in Expanded Form](https://www.codewars.com/kata/5842df8ccbd22792a4000245)
 - [First non-repeating character](https://www.codewars.com/kata/52bc74d4ac05d0945d00054e)
+- [Find the odd int](https://www.codewars.com/kata/54da5a58ea159efa38000836)
