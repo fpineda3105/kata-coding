@@ -24,19 +24,8 @@
 
 function PaginationHelper(collection, itemsPerPage){
     this.collection = collection;
-    if (this.collection.length > 0) {
-        this.itemsPerPage = itemsPerPage;
-        if (collection.length >= itemsPerPage) {
-            this.pages = Math.ceil(collection.length / itemsPerPage);
-        }
-        else {
-            this.pages = 1;
-        }
-    }
-    else {
-        this.itemsPerPage = 0;
-        this.pages = 0;
-    }    
+    this.itemsPerPage = itemsPerPage;  
+    this.pages = Math.ceil(this.collection.length / this.itemsPerPage);  
 }
 
 // returns the number of items within the entire collection
@@ -54,23 +43,17 @@ PaginationHelper.prototype.pageCount = function() {
 // returns the number of items on the current page. page_index is zero based.
 // this method should return -1 for pageIndex values that are out of range
 PaginationHelper.prototype.pageItemCount = function(pageIndex) {
-    if (this.pages === 0) {
-        return 0;
-    }
-    if (pageIndex > this.pages - 1 || pageIndex < 0) {
-        return -1;
-    }
-    let items = ((pageIndex + 1) * this.itemsPerPage) - this.collection.length;
-    return items <= 0 ? this.itemsPerPage : this.itemsPerPage - items;    
+    return pageIndex < this.pageCount() 
+    ? Math.min(this.itemsPerPage, this.collection.length - (pageIndex * this.itemsPerPage))
+    : -1;       
 }
 
 // determines what page an item is on. Zero based indexes
 // this method should return -1 for itemIndex values that are out of range
 PaginationHelper.prototype.pageIndex = function(itemIndex) {
-   if (itemIndex < 0 || itemIndex > this.collection.length || this.itemsPerPage === 0) {
-       return -1;
-   }   
-   return Math.floor(itemIndex / this.itemsPerPage);
+    return itemIndex < this.collection.length && itemIndex >= 0
+    ? Math.floor(itemIndex / this.itemsPerPage)
+    : -1;   
 }
 
 //----- Test Cases ---//
@@ -89,7 +72,7 @@ test("PaginationHelper of [], 4) ", () => {
     let pagHelper = new PaginationHelper([], 4);
     expect(pagHelper.itemCount()).toStrictEqual(0);
     expect(pagHelper.pageCount()).toStrictEqual(0);
-    expect(pagHelper.pageItemCount(0)).toStrictEqual(0);
+    expect(pagHelper.pageItemCount(0)).toStrictEqual(-1);
     expect(pagHelper.pageIndex(0)).toStrictEqual(-1);
 
 });
