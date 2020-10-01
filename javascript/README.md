@@ -23,3 +23,4 @@ npm test
 - [Pagination Helper](https://www.codewars.com/kata/515bb423de843ea99400000a)
 - [Sort the odd](https://www.codewars.com/kata/578aa45ee9fd15ff4600090d/)
 - [Pyramid Array](https://www.codewars.com/kata/515f51d438015969f7000013)
+- [Perimeter of squares in a rectangle](https://www.codewars.com/kata/559a28007caad2ac4e000083/)
