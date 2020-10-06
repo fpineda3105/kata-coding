@@ -24,3 +24,4 @@ npm test
 - [Sort the odd](https://www.codewars.com/kata/578aa45ee9fd15ff4600090d/)
 - [Pyramid Array](https://www.codewars.com/kata/515f51d438015969f7000013)
 - [Perimeter of squares in a rectangle](https://www.codewars.com/kata/559a28007caad2ac4e000083/)
+- [Moving Zeros To The End](https://www.codewars.com/kata/52597aa56021e91c93000cb0)
