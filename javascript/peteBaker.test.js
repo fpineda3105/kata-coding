@@ -17,7 +17,7 @@ function cakes(recipe, ingredients) {
     let cakes = 0;
     for (const [k, v] of Object.entries(recipe)) {
         if (ingredients[k] > 0) {
-            cakes = cakes === 0 ? Math.max(Math.floor(ingredients[k] / v), cakes) :
+            cakes = cakes === 0 ? Math.floor(ingredients[k] / v) :
                 Math.min(Math.floor(ingredients[k] / v), cakes);
         }
         else {
