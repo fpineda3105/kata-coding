@@ -26,3 +26,4 @@ npm test
 - [Perimeter of squares in a rectangle](https://www.codewars.com/kata/559a28007caad2ac4e000083/)
 - [Moving Zeros To The End](https://www.codewars.com/kata/52597aa56021e91c93000cb0)
 - [Pete, the baker](https://www.codewars.com/kata/525c65e51bf619685c000059)
+- [Human Readable Time](https://www.codewars.com/kata/52685f7382004e774f0001f7/)
