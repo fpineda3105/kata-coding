@@ -14,19 +14,17 @@
 
 function howManyOf(seconds, divider) {
     let result = Math.floor(seconds / divider);
-    return {
-        result: result >= 10 ? result : '0' + result,
-        rest: seconds % divider
-    }
+    return [
+        result >= 10 ? result : '0' + result,
+        seconds % divider
+    ]        
 }
 
 function humanReadable(seconds) {
     let [hh, mm, ss] = ['00', '00', '00'];
-    hh = howManyOf(seconds, 3600).result;
-    seconds = howManyOf(seconds, 3600).rest;
-    mm = howManyOf(seconds,60).result;
-    seconds = howManyOf(seconds,60).rest;
-    ss = howManyOf(seconds,1).result;    
+    [hh, seconds] = howManyOf(seconds, 3600);
+    [mm, seconds] = howManyOf(seconds,60);
+    [ss] = howManyOf(seconds,1);    
     return [hh, mm, ss].join(":");
 }
 
@@ -35,12 +33,14 @@ test('the humanReadable of 86399 is  "23:59:59" ', () => {
     expect(humanReadable(86399)).toStrictEqual("23:59:59");
 })
 
-// Test cases
 test('the humanReadable of 0 is  "00:00:00" ', () => {
     expect(humanReadable(0)).toStrictEqual("00:00:00");
 })
 
-// Test cases
 test('the humanReadable of 5 is  "00:00:05" ', () => {
     expect(humanReadable(5)).toStrictEqual("00:00:05");
+})
+
+test('the humanReadable of 359999 is  "99:59:59" ', () => {
+    expect(humanReadable(359999)).toStrictEqual("99:59:59");
 })
