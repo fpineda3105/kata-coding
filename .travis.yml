@@ -16,4 +16,5 @@ matrix:
       install:        
         - cd csharp
         - dotnet build
+      script:
         - dotnet test   
