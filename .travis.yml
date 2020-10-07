@@ -17,8 +17,5 @@ matrix:
         - pwd
         - cd csharp
       install:
-        - nuget restore dotnetCoreTDD.sln
-        - nuget install xunit.runners -Version 2.4.0 -OutputDirectory testrunner
-      script:
-        - msbuild /p:Configuration=Release dotnetCoreTDD.sln
-        - mono ./testrunner/xunit.runners.2.4.0/tools/xunit.console.clr4.exe ./TDDTraining.Tests/bin/Release/TDDTraining.Tests.dll       
+        - dotnet build
+        - dotnet test   
