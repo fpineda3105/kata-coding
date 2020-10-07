@@ -17,5 +17,5 @@ matrix:
         - pwd
         - cd csharp
       install:
-        - dotnet build
+        - cd TDDTraining
         - dotnet test   
