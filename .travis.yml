@@ -8,4 +8,13 @@ matrix:
         - cd javascript
       script:
         - npm install
-        - npm test    
+        - npm test
+    - language: csharp
+      dotnet: 3.1
+      before_script:
+        - cd csharp
+      install:
+        - dotnet restore
+      script:
+        - dotnet build
+        - dotnet test    
