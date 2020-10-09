@@ -23,7 +23,7 @@ using Xunit;
  * F(m) being the smallest one such as F(m) * F(m+1) > prod.
  * 
  */
-namespace TrainigTDD
+namespace TDDTraining
 {
     public class ProductFibonacciTest
     {
