@@ -28,3 +28,4 @@ npm test
 - [Pete, the baker](https://www.codewars.com/kata/525c65e51bf619685c000059)
 - [Human Readable Time](https://www.codewars.com/kata/52685f7382004e774f0001f7/)
 - [Simple Pig Latin](https://www.codewars.com/kata/520b9d2ad5c005041100000f/)
+- [Min window Substring](https://coderbyte.com/information/Min%20Window%20Substring)
