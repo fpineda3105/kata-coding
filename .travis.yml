@@ -19,7 +19,9 @@ matrix:
       script:
         - dotnet test
     - language: java
-      jdk: openjdk11   
+      jdk: openjdk11
+      before_install:
+        - chmod +x mvnw   
       install:
         - cd java
         - ./mvnw verify
