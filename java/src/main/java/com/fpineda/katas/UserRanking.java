@@ -32,7 +32,7 @@ public class UserRanking {
         private void initRankValues() {
             var counter = 16;
             var validValues =
-                    IntStream.rangeClosed(-8, 8).filter(number -> number != 0).toArray();
+                    IntStream.rangeClosed(MIN_RANK, MAX_RANK).filter(number -> number != 0).toArray();
             
             for (int element : validValues) {
                 rankValues.put(element, counter);
