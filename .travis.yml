@@ -19,9 +19,12 @@ matrix:
       script:
         - dotnet test
     - language: java
-      jdk: openjdk11
-      before_install:
+      jdk: openjdk11 
+      cache:
+        directories:
+        - .autoconf
+        - $HOME/.m2             
+      script:
         - cd java
-        - chmod +x mvnw   
-      install:        
+        - chmod +x mvnw         
         - ./mvnw verify
