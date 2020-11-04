@@ -21,7 +21,7 @@ matrix:
     - language: java
       jdk: openjdk11
       before_install:
-        - chmod +x mvnw   
-      install:
         - cd java
+        - chmod +x mvnw   
+      install:        
         - ./mvnw verify
