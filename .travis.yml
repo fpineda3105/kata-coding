@@ -17,4 +17,11 @@ matrix:
         - cd csharp
         - dotnet build
       script:
-        - dotnet test   
+        - dotnet test
+    - language: java
+      jdk: openjdk11
+      before_install:
+        - cd java
+        - chmod +x mvnw   
+      install:        
+        - ./mvnw verify
