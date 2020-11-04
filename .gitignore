@@ -3,3 +3,32 @@
 /csharp/TDDTraining/bin/
 /csharp/TDDTraining/obj/
 .vscode
+
+java/target/
+java/pom.xml.tag
+java/pom.xml.releaseBackup
+java/pom.xml.versionsBackup
+java/pom.xml.next
+java/release.properties
+java/dependency-reduced-pom.xml
+java/buildNumber.properties
+java/.mvn/timing.properties
+
+#
+# IntelliJ
+#
+java/*.iml
+java/.idea/*
+java/!.idea/runConfigurations/
+
+#
+# Visual Studio Code
+#
+java/.settings/
+java/.classpath
+java/.factorypath
+java/.project
+java/.vscode/
+java/src/main/java/com/fpineda/katas/App.java
+
+java/.travis.yml
