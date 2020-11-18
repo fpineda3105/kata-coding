@@ -44,7 +44,6 @@ public class TheLift {
         QueueManager() {
             this.upwardStops = new TreeMap<Integer, FloorQueue>();
             this.downwardStops = new TreeMap<Integer, FloorQueue>(Collections.reverseOrder());
-
         }
 
         public void initialize(final int[][] queues) {
@@ -150,136 +149,36 @@ public class TheLift {
 
     }
 
-    static class Lift {
+    static class State {
         private int capacity;
         private int currentFloor;
         private int lastFloor;
         private List<Integer> floorsVisited;
-        private QueueManager queueManager;
 
         Direction direction;
         int countPassengers;
 
         int[] passengers;
 
-        Lift(int capacity) {
-            this.queueManager = new QueueManager();
+        State(int capacity, int lastFloor) {
             this.capacity = capacity;
             this.currentFloor = 0;
             this.countPassengers = 0;
             this.direction = Direction.UPWARD;
             this.floorsVisited = new ArrayList<>();
+            this.passengers = new int[lastFloor + 1];
         }
 
-        public void initialize(final int[][] queues) {
-            lastFloor = queues.length - 1;
-            this.passengers = new int[queues.length];
-
-            queueManager.initialize(queues);
-            if (!queueManager.hasUpwardStops()) {
-                floorsVisited.add(currentFloor);
-                updateToHigherStopFloor();
-            }
-        }
-
-        private void updateToHigherStopFloor() {
-            if (!queueManager.hasUpwardStops() && queueManager.hasDownwardStops()) {
-                currentFloor = queueManager.mostHigherDownStop();
-                direction = Direction.DOWNWARD;
-            }
-        }
-
-        private boolean hasMoreTravels() {
-            return hasPassengersOnBoard() || queueManager.hasMoreQueues();
-        }
-
-        private void addCurrentFloorVisited() {
+        public void recordHistory() {
             floorsVisited.add(currentFloor);
-        }
+        }        
 
-        public void run() {
-            while (hasMoreTravels()) {
-                addCurrentFloorVisited();
-                landPassengers();
-                updateDirection();
-                mountPassengers();
-                updateCurrentStop();
-                updateCurrentFloor();
-            }
-            if (floorsVisited.get(floorsVisited.size() - 1) > 0) {
-                this.floorsVisited.add(0);
-            }
-        }
-
-        private void landPassengers() {
+        public void landPassengers() {
             var landingPassengers = passengers[currentFloor];
             if (landingPassengers > 0) {
                 countPassengers -= landingPassengers;
                 passengers[currentFloor] = 0;
             }
-        }
-
-        private void mountPassengers() {
-            Queue<Integer> persons;
-            if (direction == Direction.UPWARD) {
-                persons = queueManager.peopleGoingUpFrom(currentFloor);
-            } else {
-                persons = queueManager.peopleGoingDownFrom(currentFloor);
-            }
-            if (persons != null) {
-                int rightQuantity = Math.min(capacity - countPassengers, persons.size());
-                IntStream.range(0, rightQuantity).forEach(ignored -> {
-                    addPassanger(persons.poll());
-                });
-            }
-        }
-
-        private void updateCurrentStop() {
-            queueManager.updateQueueIn(currentFloor);
-        }
-
-        private void updateCurrentFloor() {
-            if (!queueManager.hasUpwardStops() && !hasPassengersOnBoard()) {
-                updateToHigherStopFloor();
-                return;
-            }
-            if (direction == Direction.UPWARD) {
-                currentFloor = nextFloorGoingUpward();
-            } else {
-                currentFloor = nextFloorGoingDownward();
-            }
-        }
-
-        private int nextFloorGoingUpward() {
-            if (hasPassengersOnBoard()) {
-                int nextFloorDefault = nextUpwardPassengerStopFromCurrent();
-                return Math.min(queueManager.nextUpwardStopFromOrDefault(currentFloor + 1,
-                        direction, nextFloorDefault), nextFloorDefault);
-
-            } else {
-                int nextFloorDefault =
-                        queueManager.nextDownwardStopFromOrDefault(currentFloor, direction, 0);
-                return queueManager.nextUpwardStopFromOrDefault(currentFloor + 1, direction,
-                        nextFloorDefault);
-            }
-        }
-
-        private int nextFloorGoingDownward() {
-            if (hasPassengersOnBoard()) {
-                int defaultNextFloor = 0;
-                return Math.max(queueManager.nextDownwardStopFromOrDefault(currentFloor - 1,
-                        direction, defaultNextFloor), nextDownwardPassengerStop());
-
-            } else {
-                int defaultNextFloor =
-                        queueManager.nextUpwardStopFromOrDefault(currentFloor, direction, 0);
-                return queueManager.nextDownwardStopFromOrDefault(currentFloor - 1, direction,
-                        defaultNextFloor);
-            }
-        }
-
-        private boolean hasPassengersOnBoard() {
-            return countPassengers > 0;
         }
 
         private int nextUpwardPassengerStopFromCurrent() {
@@ -291,6 +190,11 @@ public class TheLift {
             return 0;
         }
 
+        public void addPassanger(int passengerFloor) {
+            passengers[passengerFloor] += 1;
+            countPassengers++;
+        }
+
         private int nextDownwardPassengerStop() {
             for (int i = currentFloor - 1; i >= 0; i--) {
                 if (passengers[i] > 0) {
@@ -300,47 +204,213 @@ public class TheLift {
             return 0;
         }
 
+        public boolean isFirstFloor() {
+            return currentFloor == 0;
+        }
+
+        public boolean isLastFloor() {
+            return currentFloor == lastFloor;
+        }
+
+        public boolean hasPassengersOnBoard() {
+            return countPassengers > 0;
+        }
+
+        public boolean isGoingUpward() {
+            return Direction.UPWARD == direction;
+        }
+
+        public boolean isGoingDownward() {
+            return Direction.DOWNWARD == direction;
+        }
+
+        public List<Integer> getHistory() {
+            return this.floorsVisited;
+        }
+
+        public int getCurrentFloor() {
+            return currentFloor;
+        }
+
+        public void setCurrentFloor(int currentFloor) {
+            this.currentFloor = currentFloor;
+        }
+
+        public Direction getDirection() {
+            return this.direction;
+        }
+
+        public void setDirection(Direction direction) {
+            this.direction = direction;
+        }
+
+        public int getCapacity() {
+            return capacity;
+        }
+
+        public int getPassengersOnBoard() {
+            return countPassengers;
+        }
+
+        public int availableSpace() {
+            return capacity - countPassengers;
+        }
+
+    }
+
+    static class Lift {
+
+        private QueueManager queueManager;
+        private State state;
+
+        Lift(final int[][] queues, int capacity) {
+            initialize(queues, capacity);
+        }
+
+        private void initialize(final int[][] queues, int capacity) {
+            this.queueManager = new QueueManager();
+            this.state = new State(capacity, queues.length - 1);
+            queueManager.initialize(queues);
+
+            if (!queueManager.hasUpwardStops()) {
+                state.recordHistory();
+                updateToHigherStopFloor();
+            }
+        }
+
+        private void updateToHigherStopFloor() {
+            if (!queueManager.hasUpwardStops() && queueManager.hasDownwardStops()) {
+                state.setCurrentFloor(queueManager.mostHigherDownStop());
+                state.setDirection(Direction.DOWNWARD);
+            }
+        }
+
+        private boolean hasMoreTravels() {
+            return state.hasPassengersOnBoard() || queueManager.hasMoreQueues();
+        }
+
+        public void run() {
+            while (hasMoreTravels()) {  
+                recordCurrentFloor();              
+                landPassengers();
+                updateDirection();
+                mountPassengers();
+                updateCurrentStop();
+                updateCurrentFloor();
+            }
+            if (state.getHistory().get(state.getHistory().size() - 1) > 0) {
+                state.setCurrentFloor(0);
+                state.recordHistory();
+            }
+        }
+
+        private void landPassengers() {
+            state.landPassengers();
+        }
+
+        private void recordCurrentFloor() {
+            state.recordHistory();
+        }
+
+        private void mountPassengers() {
+            Queue<Integer> persons;
+            if (state.isGoingUpward()) {
+                persons = queueManager.peopleGoingUpFrom(state.getCurrentFloor());
+            } else {
+                persons = queueManager.peopleGoingDownFrom(state.getCurrentFloor());
+            }
+            if (persons != null) {
+                int rightQuantity = Math.min(state.availableSpace(), persons.size());
+                IntStream.range(0, rightQuantity).forEach(ignored -> {
+                    state.addPassanger(persons.poll());
+                });
+            }
+        }
+
+        private void updateCurrentStop() {
+            queueManager.updateQueueIn(state.getCurrentFloor());
+        }
+
+        private void updateCurrentFloor() {
+            if (!queueManager.hasUpwardStops() && !state.hasPassengersOnBoard()) {
+                updateToHigherStopFloor();
+                return;
+            }
+            if (state.isGoingUpward()) {
+                state.setCurrentFloor(nextFloorGoingUpward());
+            } else {
+                state.setCurrentFloor(nextFloorGoingDownward());
+            }
+        }
+
+        private int nextFloorGoingUpward() {
+            if (state.hasPassengersOnBoard()) {
+                int nextFloorDefault = state.nextUpwardPassengerStopFromCurrent();
+                return Math
+                        .min(queueManager.nextUpwardStopFromOrDefault(state.getCurrentFloor() + 1,
+                                state.getDirection(), nextFloorDefault), nextFloorDefault);
+
+            } else {
+                int nextFloorDefault = queueManager.nextDownwardStopFromOrDefault(
+                        state.getCurrentFloor(), state.getDirection(), 0);
+                return queueManager.nextUpwardStopFromOrDefault(state.getCurrentFloor() + 1,
+                        state.getDirection(), nextFloorDefault);
+            }
+        }
+
+        private int nextFloorGoingDownward() {
+            if (state.hasPassengersOnBoard()) {
+                int defaultNextFloor = 0;
+                return Math.max(
+                        queueManager.nextDownwardStopFromOrDefault(state.getCurrentFloor() - 1,
+                                state.getDirection(), defaultNextFloor),
+                        state.nextDownwardPassengerStop());
+
+            } else {
+                int defaultNextFloor = queueManager.nextUpwardStopFromOrDefault(
+                        state.getCurrentFloor(), state.getDirection(), 0);
+                return queueManager.nextDownwardStopFromOrDefault(state.getCurrentFloor() - 1,
+                        state.getDirection(), defaultNextFloor);
+            }
+        }
+
         private void updateDirection() {
 
-            if (hasPassengersOnBoard()) {
+            if (state.hasPassengersOnBoard()) {
                 return;
             }
-            if (currentFloor == 0) {
-                direction = Direction.UPWARD;
+            if (state.isFirstFloor()) {
+                state.setDirection(Direction.UPWARD);
                 return;
             }
-            if (currentFloor == lastFloor) {
-                direction = Direction.DOWNWARD;
+            if (state.isLastFloor()) {
+                state.setDirection(Direction.DOWNWARD);
                 return;
             }
-            if (Direction.DOWNWARD == direction
-                    && !queueManager.hasMoreStopsGoingDownFrom(currentFloor)) {
-                direction = Direction.UPWARD;
+            if (state.isGoingDownward()
+                    && !queueManager.hasMoreStopsGoingDownFrom(state.getCurrentFloor())) {
+                state.setDirection(Direction.UPWARD);
                 return;
             }
-            if (!queueManager.hasMoreStopsGoingUpFrom(currentFloor)) {
-                direction = Direction.DOWNWARD;
+            if (!queueManager.hasMoreStopsGoingUpFrom(state.getCurrentFloor())) {
+                state.setDirection(Direction.DOWNWARD);
             }
         }
 
-        public void addPassanger(int passengerFloor) {
-            passengers[passengerFloor] += 1;
-            countPassengers++;
-        }
+        
 
-        public List<Integer> getFloorsVisited() {
-            return this.floorsVisited;
+        public List<Integer> getHistory() {
+            return state.getHistory();
         }
 
     }
 
     public static int[] theLift(final int[][] queues, final int capacity) {
-        var lift = new Lift(capacity);
-        lift.initialize(queues);
+        var lift = new Lift(queues,capacity);        
 
         lift.run();
 
-        return lift.getFloorsVisited().stream().mapToInt(i -> i).toArray();
+        return lift.getHistory().stream().mapToInt(i -> i).toArray();
     }
 
 }
