@@ -11,17 +11,151 @@ import java.util.stream.IntStream;
 
 public class TheLift {
 
+    static enum Direction {
+        UPWARD, DOWNWARD
+    }
+
+    static class FloorQueue {
+        private Queue<Integer> people;
+
+        FloorQueue() {
+            people = new ArrayDeque<>();
+        }
+
+        public void addPeople(int destinationFloor) {
+            people.add(destinationFloor);
+        }
+
+        public boolean hasPeopleWaiting() {
+            return people != null && !people.isEmpty();
+        }
+
+        public Queue<Integer> getPeopleWaiting() {
+            return people;
+        }
+
+    }
+
+    static class QueueManager {
+
+        private SortedMap<Integer, FloorQueue> upwardStops;
+        private SortedMap<Integer, FloorQueue> downwardStops;
+
+        QueueManager() {
+            this.upwardStops = new TreeMap<Integer, FloorQueue>();
+            this.downwardStops = new TreeMap<Integer, FloorQueue>(Collections.reverseOrder());
+
+        }
+
+        public void initialize(final int[][] queues) {
+            for (int i = 0; i < queues.length; i++) {
+                for (int j = 0; j < queues[i].length; j++) {
+                    if (queues[i][j] > i) {
+                        addPeopleGoingUpward(i, queues[i][j]);
+                    } else {
+                        addPeopleGoingDownward(i, queues[i][j]);
+                    }
+                }
+            }
+        }
+
+        public void addPeopleGoingUpward(int sourceFloor, int personDestination) {
+            upwardStops.computeIfAbsent(sourceFloor, k -> new FloorQueue());
+            upwardStops.get(sourceFloor).addPeople(personDestination);
+        }
+
+        public void addPeopleGoingDownward(int sourceFloor, int destinationFloor) {
+            downwardStops.computeIfAbsent(sourceFloor, k -> new FloorQueue());
+            downwardStops.get(sourceFloor).addPeople(destinationFloor);
+        }
+
+        public boolean hasUpwardStops() {
+            return !upwardStops.isEmpty();
+        }
+
+        public boolean hasDownwardStops() {
+            return !downwardStops.isEmpty();
+        }
+
+        public int mostHigherDownStop() {
+            return downwardStops.firstKey();
+        }
+
+        public boolean hasMoreStopsGoingDownFrom(int floorId) {
+            return !downwardStops.tailMap(floorId).isEmpty()
+                    || !upwardStops.headMap(floorId).isEmpty();
+        }
+
+        public boolean hasMoreStopsGoingUpFrom(int currentFloor) {
+            return !upwardStops.tailMap(currentFloor).isEmpty()
+                    || !downwardStops.headMap(currentFloor).isEmpty();
+        }
+
+        public Queue<Integer> peopleGoingUpFrom(int floorId) {
+            return upwardStops.containsKey(floorId) ? upwardStops.get(floorId).getPeopleWaiting()
+                    : null;
+        }
+
+        public Queue<Integer> peopleGoingDownFrom(int floorId) {
+            return downwardStops.containsKey(floorId)
+                    ? downwardStops.get(floorId).getPeopleWaiting()
+                    : null;
+        }
+
+        public void updateQueueIn(int floorId) {
+            if (upwardStops.containsKey(floorId) && !upwardStops.get(floorId).hasPeopleWaiting()) {
+                upwardStops.remove(floorId);
+            }
+            if (downwardStops.containsKey(floorId)
+                    && !downwardStops.get(floorId).hasPeopleWaiting()) {
+                downwardStops.remove(floorId);
+            }
+        }
+
+        public int nextUpwardStopFromOrDefault(final int floorId, final Direction direction,
+                final int defaultStop) {
+            if (Direction.UPWARD == direction) {
+                var upwardRemaingStops = upwardStops.tailMap(floorId);
+                if (!upwardRemaingStops.isEmpty()) {
+                    return upwardRemaingStops.firstKey();
+                }
+            } else {
+                var upwardRemaingStops = upwardStops.headMap(floorId);
+                if (!upwardRemaingStops.isEmpty()) {
+                    return upwardRemaingStops.firstKey();
+                }
+            }
+            return defaultStop;
+        }
+
+        public int nextDownwardStopFromOrDefault(final int floorId, final Direction direction,
+                final int defaultStop) {
+            if (direction == Direction.UPWARD) {
+                var downwardRemaingStops = downwardStops.headMap(floorId);
+                if (!downwardRemaingStops.isEmpty()) {
+                    return downwardRemaingStops.firstKey();
+                }
+            } else {
+                var downwardRemaingStops = downwardStops.tailMap(floorId);
+                if (!downwardRemaingStops.isEmpty()) {
+                    return downwardRemaingStops.firstKey();
+                }
+            }
+            return defaultStop;
+        }
+
+        public boolean hasMoreQueues() {
+            return hasUpwardStops() || hasDownwardStops();
+        }
+
+    }
+
     static class Lift {
         private int capacity;
         private int currentFloor;
         private int lastFloor;
         private List<Integer> floorsVisited;
-        private SortedMap<Integer, Queue<Integer>> upStops;
-        private SortedMap<Integer, Queue<Integer>> downStops;
-
-        enum Direction {
-            UPWARD, DOWNWARD
-        }
+        private QueueManager queueManager;
 
         Direction direction;
         int countPassengers;
@@ -29,66 +163,47 @@ public class TheLift {
         int[] passengers;
 
         Lift(int capacity) {
+            this.queueManager = new QueueManager();
             this.capacity = capacity;
             this.currentFloor = 0;
             this.countPassengers = 0;
             this.direction = Direction.UPWARD;
             this.floorsVisited = new ArrayList<>();
-            this.upStops = new TreeMap<Integer, Queue<Integer>>();
-            this.downStops = new TreeMap<Integer, Queue<Integer>>(Collections.reverseOrder());
         }
 
         public void initialize(final int[][] queues) {
             lastFloor = queues.length - 1;
             this.passengers = new int[queues.length];
-            for (int i = 0; i < queues.length; i++) {
-                for (int j = 0; j < queues[i].length; j++) {
-                    if (queues[i][j] > i) {
-                        addUpStop(i, queues[i][j]);
-                    } else {
-                        addDownStop(i, queues[i][j]);
-                    }
-                }
-            }
-            if (!hasUpwardTravels()) {
+
+            queueManager.initialize(queues);
+            if (!queueManager.hasUpwardStops()) {
                 floorsVisited.add(currentFloor);
-                updateUpwardsTravels();
+                updateToHigherStopFloor();
             }
         }
 
-        private boolean hasUpwardTravels() {
-            return upStops.size() > 0;
-        }
-
-        private boolean hasDownwardTravels() {
-            return downStops.size() > 0;
-        }
-
-        private void updateUpwardsTravels() {
-            if (!hasUpwardTravels() && hasDownwardTravels()) {
-                currentFloor = downStops.firstKey();
+        private void updateToHigherStopFloor() {
+            if (!queueManager.hasUpwardStops() && queueManager.hasDownwardStops()) {
+                currentFloor = queueManager.mostHigherDownStop();
                 direction = Direction.DOWNWARD;
             }
         }
 
         private boolean hasMoreTravels() {
-            return upStops.size() > 0 || downStops.size() > 0 || hasPassengersOnBoard();
+            return hasPassengersOnBoard() || queueManager.hasMoreQueues();
+        }
+
+        private void addCurrentFloorVisited() {
+            floorsVisited.add(currentFloor);
         }
 
         public void run() {
             while (hasMoreTravels()) {
-
-                floorsVisited.add(currentFloor);
-
+                addCurrentFloorVisited();
                 landPassengers();
                 updateDirection();
-                if (Direction.UPWARD.equals(direction)) {
-                    mountPassengers(upStops);
-                    updateStopsIn(upStops, currentFloor);
-                } else {
-                    mountPassengers(downStops);
-                    updateStopsIn(downStops, currentFloor);
-                }
+                mountPassengers();
+                updateCurrentStop();
                 updateCurrentFloor();
             }
             if (floorsVisited.get(floorsVisited.size() - 1) > 0) {
@@ -104,46 +219,62 @@ public class TheLift {
             }
         }
 
-        private void mountPassengers(final SortedMap<Integer, Queue<Integer>> stops) {
-            var persons = stops.get(currentFloor);
+        private void mountPassengers() {
+            Queue<Integer> persons;
+            if (direction == Direction.UPWARD) {
+                persons = queueManager.peopleGoingUpFrom(currentFloor);
+            } else {
+                persons = queueManager.peopleGoingDownFrom(currentFloor);
+            }
             if (persons != null) {
-                var available = Math.min(capacity - countPassengers, persons.size());
-                IntStream.range(0, available).forEach(val -> {
+                int rightQuantity = Math.min(capacity - countPassengers, persons.size());
+                IntStream.range(0, rightQuantity).forEach(ignored -> {
                     addPassanger(persons.poll());
                 });
             }
         }
 
-        private void updateStopsIn(final SortedMap<Integer, Queue<Integer>> stops, int floor) {
-            if (stops.containsKey(floor) && stops.get(floor).size() == 0) {
-                stops.remove(floor);
-            }
+        private void updateCurrentStop() {
+            queueManager.updateQueueIn(currentFloor);
         }
 
         private void updateCurrentFloor() {
-            if (!hasUpwardTravels() && !hasPassengersOnBoard()) {
-                updateUpwardsTravels();
+            if (!queueManager.hasUpwardStops() && !hasPassengersOnBoard()) {
+                updateToHigherStopFloor();
                 return;
             }
             if (direction == Direction.UPWARD) {
-                if (hasPassengersOnBoard()) {
-                    currentFloor =
-                            Math.min(nextUpwardStopFromOrDefault(upStops.tailMap(currentFloor + 1),
-                                    nextUpwardPassengerStop()), nextUpwardPassengerStop());
-                } else {
-                    currentFloor = nextUpwardStopFromOrDefault(upStops.tailMap(currentFloor + 1),
-                            nextDownwardStopFromOrDefault(downStops.headMap(currentFloor), 0));
-                }
+                currentFloor = nextFloorGoingUpward();
             } else {
-                if (hasPassengersOnBoard()) {
-                    currentFloor = Math.max(
-                            nextDownwardStopFromOrDefault(downStops.tailMap(currentFloor - 1), 0),
-                            nextDownwardPassengerStop());
-                } else {
-                    currentFloor =
-                            nextDownwardStopFromOrDefault(downStops.tailMap(currentFloor - 1),
-                                    nextUpwardStopFromOrDefault(upStops.headMap(currentFloor), 0));
-                }
+                currentFloor = nextFloorGoingDownward();
+            }
+        }
+
+        private int nextFloorGoingUpward() {
+            if (hasPassengersOnBoard()) {
+                int nextFloorDefault = nextUpwardPassengerStopFromCurrent();
+                return Math.min(queueManager.nextUpwardStopFromOrDefault(currentFloor + 1,
+                        direction, nextFloorDefault), nextFloorDefault);
+
+            } else {
+                int nextFloorDefault =
+                        queueManager.nextDownwardStopFromOrDefault(currentFloor, direction, 0);
+                return queueManager.nextUpwardStopFromOrDefault(currentFloor + 1, direction,
+                        nextFloorDefault);
+            }
+        }
+
+        private int nextFloorGoingDownward() {
+            if (hasPassengersOnBoard()) {
+                int defaultNextFloor = 0;
+                return Math.max(queueManager.nextDownwardStopFromOrDefault(currentFloor - 1,
+                        direction, defaultNextFloor), nextDownwardPassengerStop());
+
+            } else {
+                int defaultNextFloor =
+                        queueManager.nextUpwardStopFromOrDefault(currentFloor, direction, 0);
+                return queueManager.nextDownwardStopFromOrDefault(currentFloor - 1, direction,
+                        defaultNextFloor);
             }
         }
 
@@ -151,26 +282,8 @@ public class TheLift {
             return countPassengers > 0;
         }
 
-        private int nextUpwardPassengerStop() {
-            return hasPassengersOnBoard() ? nextLowerFloor() : lastFloor;
-        }
-
-        private int nextUpwardStopFromOrDefault(final SortedMap<Integer, Queue<Integer>> stops,
-                int defaultFloor) {
-            return stops.size() > 0 ? stops.firstKey() : defaultFloor;
-        }
-
-        private int nextDownwardStopFromOrDefault(final SortedMap<Integer, Queue<Integer>> stops,
-                int defaultFloor) {
-            return stops.size() > 0 ? stops.firstKey() : defaultFloor;
-        }
-
-        private int nextDownwardPassengerStop() {
-            return hasPassengersOnBoard() ? nextHighFloor() : 0;
-        }
-
-        private int nextHighFloor() {
-            for (int i = currentFloor - 1; i >= 0; i--) {
+        private int nextUpwardPassengerStopFromCurrent() {
+            for (int i = currentFloor + 1; i < passengers.length; i++) {
                 if (passengers[i] > 0) {
                     return i;
                 }
@@ -178,8 +291,8 @@ public class TheLift {
             return 0;
         }
 
-        private int nextLowerFloor() {
-            for (int i = currentFloor + 1; i < passengers.length; i++) {
+        private int nextDownwardPassengerStop() {
+            for (int i = currentFloor - 1; i >= 0; i--) {
                 if (passengers[i] > 0) {
                     return i;
                 }
@@ -192,44 +305,27 @@ public class TheLift {
             if (hasPassengersOnBoard()) {
                 return;
             }
-            if (Direction.DOWNWARD == direction) {
-                if (currentFloor == 0 || !hasMoreStopsGoingDown()) {
-                    direction = Direction.UPWARD;
-                }
+            if (currentFloor == 0) {
+                direction = Direction.UPWARD;
                 return;
             }
-            if (currentFloor == lastFloor || !hasMoreStopsGoingUp()) {
+            if (currentFloor == lastFloor) {
+                direction = Direction.DOWNWARD;
+                return;
+            }
+            if (Direction.DOWNWARD == direction
+                    && !queueManager.hasMoreStopsGoingDownFrom(currentFloor)) {
+                direction = Direction.UPWARD;
+                return;
+            }
+            if (!queueManager.hasMoreStopsGoingUpFrom(currentFloor)) {
                 direction = Direction.DOWNWARD;
             }
-        }
-
-        private boolean hasMoreStopsGoingDown() {
-            return hasMoreStopsFromFloor(downStops.tailMap(currentFloor))
-            || hasMoreStopsFromFloor(upStops.headMap(currentFloor));
-        }
-
-        private boolean hasMoreStopsGoingUp() {
-            return hasMoreStopsFromFloor(upStops.tailMap(currentFloor))
-                    || hasMoreStopsFromFloor(downStops.headMap(currentFloor));
-        }
-
-        private boolean hasMoreStopsFromFloor(final SortedMap<Integer, Queue<Integer>> stops) {
-            return hasPassengersOnBoard() || stops.size() > 0;
         }
 
         public void addPassanger(int passengerFloor) {
             passengers[passengerFloor] += 1;
             countPassengers++;
-        }
-
-        public void addUpStop(int sourceFloor, int destinationFloor) {
-            this.upStops.computeIfAbsent(sourceFloor, k -> new ArrayDeque<>());
-            this.upStops.get(sourceFloor).add(destinationFloor);
-        }
-
-        public void addDownStop(int sourceFloor, int destinationFloor) {
-            this.downStops.computeIfAbsent(sourceFloor, k -> new ArrayDeque<>());
-            this.downStops.get(sourceFloor).add(destinationFloor);
         }
 
         public List<Integer> getFloorsVisited() {

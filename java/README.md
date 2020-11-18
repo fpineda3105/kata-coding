@@ -19,3 +19,5 @@ or
 - [Decode the Morse Code Level 1](https://www.codewars.com/kata/54b724efac3d5402db00065e)
 - [Decode the Morse Code Level 2](https://www.codewars.com/kata/54b72c16cd7f5154e9000457)
 - [Pyramid Slide Down](https://www.codewars.com/kata/551f23362ff852e2ab000037/)
+- [The Lift](https://www.codewars.com/kata/58905bfa1decb981da00009e)
+  
