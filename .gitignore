@@ -36,3 +36,5 @@ java/.travis.yml
 ## Clojure 
 clojure_/target/
 clojure_/CHANGELOG.md
+clojure_/.hgignore
+clojure_/.gitignore
