@@ -1,3 +1,3 @@
 # clojure_
 
-A Clojure Kata testing code
+A Clojure Kata TDD code
