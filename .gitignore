@@ -38,3 +38,4 @@ clojure_/target/
 clojure_/CHANGELOG.md
 clojure_/.hgignore
 clojure_/.gitignore
+clojure_/.calva

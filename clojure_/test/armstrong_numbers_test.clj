@@ -38,6 +38,3 @@
   (testing "Seven digit number that is not an Armstrong number"
     (is (not (armstrong? 9926314)))))
 
-(deftest armstrong-number-21897142587612075
-  (testing "Seventeen digit number that is an Armstrong number"
-    (is (armstrong? 21897142587612075))))
