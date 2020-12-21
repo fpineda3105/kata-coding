@@ -1,3 +1,11 @@
-# clojure_
+# Clojure Kata coding repository
 
-A Clojure Kata TDD code
+All the Kata code here is tested
+
+## Prerequisites
+[Leiningen](https://leiningen.org/)
+
+To run all the test
+```
+sbt test
+```
