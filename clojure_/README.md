@@ -7,5 +7,5 @@ All the Kata code here is tested
 
 To run all the test
 ```
-sbt test
+lein test
 ```
