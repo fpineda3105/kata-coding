@@ -1,9 +1,11 @@
+## Javscript
 /javascript/node_modules/
 /csharp/.vs
 /csharp/TDDTraining/bin/
 /csharp/TDDTraining/obj/
 .vscode
 
+## Java
 java/target/
 java/pom.xml.tag
 java/pom.xml.releaseBackup
@@ -39,3 +41,8 @@ clojure_/CHANGELOG.md
 clojure_/.hgignore
 clojure_/.gitignore
 clojure_/.calva
+
+##Scala
+.metals
+scala/project
+scala/target
