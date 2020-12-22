@@ -9,4 +9,8 @@ To run all the test
 ```
 sbt test
 ```
+
+## katas
+
+[two-fer](https://github.com/exercism/problem-specifications/issues/757)
   

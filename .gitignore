@@ -1,3 +1,5 @@
+target
+
 ## Javscript
 /javascript/node_modules/
 /csharp/.vs
@@ -46,3 +48,4 @@ clojure_/.calva
 .metals
 scala/project
 scala/target
+scala/.bsp
