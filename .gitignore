@@ -49,3 +49,5 @@ clojure_/.calva
 scala/project
 scala/target
 scala/.bsp
+scala/.bloop
+scala/.scalafmt.conf
