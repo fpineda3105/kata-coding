@@ -12,6 +12,7 @@ sbt test
 
 ## katas
 
-[two-fer](https://github.com/exercism/problem-specifications/issues/757)
-[Space Age](https://exercism.io/my/solutions/a157a080ced149558e3e8006f2917aea)
+- [two-fer](https://github.com/exercism/problem-specifications/issues/757)
+- [Space Age](https://exercism.io/my/solutions/a157a080ced149558e3e8006f2917aea)
+- [Pascal Triangle Tail Recursive](https://en.wikipedia.org/wiki/Pascal%27s_triangle)
   
