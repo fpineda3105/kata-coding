@@ -15,4 +15,5 @@ sbt test
 - [two-fer](https://github.com/exercism/problem-specifications/issues/757)
 - [Space Age](https://exercism.io/my/solutions/a157a080ced149558e3e8006f2917aea)
 - [Pascal Triangle Tail Recursive](https://en.wikipedia.org/wiki/Pascal%27s_triangle)
+- [Grade School](https://exercism.io/tracks/scala/exercises/grade-school/solutions/30c4cd8e0dd4466ba1c70182a2d5199c)
   
