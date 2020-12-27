@@ -18,4 +18,5 @@ sbt test
 - [Grade School](https://exercism.io/tracks/scala/exercises/grade-school/solutions/30c4cd8e0dd4466ba1c70182a2d5199c)
 - [Hamming distance](http://rosalind.info/problems/hamm/)
 - [Valid Braces](https://www.codewars.com/kata/5277c8a221e209d3f6000b56/)
+- [Simple ETL](https://exercism.io/tracks/scala/exercises/etl/solutions/1b2ea737aac04d069385837d159c1b45)
   
