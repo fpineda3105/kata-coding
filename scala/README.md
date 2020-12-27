@@ -17,4 +17,5 @@ sbt test
 - [Pascal Triangle Tail Recursive](https://en.wikipedia.org/wiki/Pascal%27s_triangle)
 - [Grade School](https://exercism.io/tracks/scala/exercises/grade-school/solutions/30c4cd8e0dd4466ba1c70182a2d5199c)
 - [Hamming distance](http://rosalind.info/problems/hamm/)
+- [Valid Braces](https://www.codewars.com/kata/5277c8a221e209d3f6000b56/)
   
