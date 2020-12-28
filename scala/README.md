@@ -19,4 +19,6 @@ sbt test
 - [Hamming distance](http://rosalind.info/problems/hamm/)
 - [Valid Braces](https://www.codewars.com/kata/5277c8a221e209d3f6000b56/)
 - [Simple ETL](https://exercism.io/tracks/scala/exercises/etl/solutions/1b2ea737aac04d069385837d159c1b45)
+- [[Sum of Multiples](](https://exercism.io/tracks/scala/exercises/sum-of-multiples/solutions/1d4e50873fbf4494bce8f7083cfb4c92))
+- [Playing with Digits](https://www.codewars.com/kata/5552101f47fc5178b1000050/scala)
   

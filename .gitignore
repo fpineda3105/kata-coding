@@ -51,3 +51,5 @@ scala/target
 scala/.bsp
 scala/.bloop
 scala/.scalafmt.conf
+scala/.ammonite
+scala/src/main/scala/scala.worksheet.sc
