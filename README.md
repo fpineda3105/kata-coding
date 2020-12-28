@@ -3,7 +3,7 @@
 Coding repository for the languages that I'm learning or trying to master
 
 - [Java](/java)
-- Scala
-- Clojure
-- C#
-- Javascript
+- [Scala](/scala)
+- [Clojure](/clojure_)
+- [C#](/csharp)
+- [Javascript](/javascript)
