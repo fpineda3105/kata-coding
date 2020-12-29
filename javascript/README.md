@@ -30,3 +30,4 @@ npm test
 - [Simple Pig Latin](https://www.codewars.com/kata/520b9d2ad5c005041100000f/)
 - [Min window Substring](https://coderbyte.com/information/Min%20Window%20Substring)
 - [Range extraction](https://www.codewars.com/kata/51ba717bb08c1cd60f00002f)
+- [Hamming Distance](https://www.codewars.com/kata/5410c0e6a0e736cf5b000e69/javascript)

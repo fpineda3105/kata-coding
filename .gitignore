@@ -2,6 +2,9 @@ target
 
 ## Javscript
 /javascript/node_modules/
+/javascript/.lsp
+
+## C#
 /csharp/.vs
 /csharp/TDDTraining/bin/
 /csharp/TDDTraining/obj/
