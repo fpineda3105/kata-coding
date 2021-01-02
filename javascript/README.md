@@ -32,3 +32,4 @@ npm test
 - [Range extraction](https://www.codewars.com/kata/51ba717bb08c1cd60f00002f)
 - [Hamming Distance](https://www.codewars.com/kata/5410c0e6a0e736cf5b000e69/javascript)
 - [Hamming numbers](https://www.codewars.com/kata/526d84b98f428f14a60008da/)
+- [Smallest Possible Sum](https://www.codewars.com/kata/52f677797c461daaf7000740/javascript)
