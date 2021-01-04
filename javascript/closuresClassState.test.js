@@ -1,3 +1,11 @@
+/*
+Summary of requirements:
+1. Cat constructor, requiring arguments for name and weight
+2. Throw an error if name or weight not specified when invoking the constructor.
+3. Cat.averageWeight() method should give the average weight of all cat instances created with Cat, even after if the instance's properties have changed.
+4. Must use Object.defineProperty
+*/
+
 let Cat = (function () {
     const cats = []
   
