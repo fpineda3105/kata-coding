@@ -4,5 +4,6 @@
   },
   "dependencies": {
     "jest": "^26.4.2"
-  }  
+  },
+  "version": "0.0.0"
 }
