@@ -34,3 +34,4 @@ npm test
 - [Hamming numbers](https://www.codewars.com/kata/526d84b98f428f14a60008da/)
 - [Smallest Possible Sum](https://www.codewars.com/kata/52f677797c461daaf7000740/javascript)
 - [Strip Comments](https://www.codewars.com/kata/51c8e37cee245da6b40000bd/javascript)
+- [Using closures to share class state](https://www.codewars.com/kata/53583765d5493bfdf5001b35/javascript)
