@@ -36,3 +36,4 @@ npm test
 - [Strip Comments](https://www.codewars.com/kata/51c8e37cee245da6b40000bd/javascript)
 - [Using closures to share class state](https://www.codewars.com/kata/53583765d5493bfdf5001b35/javascript)
 - [Making anagrams](https://www.hackerrank.com/challenges/ctci-making-anagrams/)
+- [Balanced Brackets](https://www.hackerrank.com/challenges/balanced-brackets/problem)
