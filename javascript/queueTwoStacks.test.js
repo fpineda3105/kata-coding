@@ -67,6 +67,6 @@ function processData(input) {
 //----- Test Cases ---//
 test(`a queu with 10\m1 42\n2\n1 14\n3\n1 28\n3\n1 60\n1 78\n2\n2
     should return [14,14]`, () => {
-    let expected = processData('10\m1 42\n2\n1 14\n3\n1 28\n3\n1 60\n1 78\n2\n2')
-    expect(expected).toStrictEqual(['14', '14'])
+    let result = processData('10\m1 42\n2\n1 14\n3\n1 28\n3\n1 60\n1 78\n2\n2')
+    expect(result).toStrictEqual(['14', '14'])
 });
