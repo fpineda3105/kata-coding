@@ -37,3 +37,4 @@ npm test
 - [Using closures to share class state](https://www.codewars.com/kata/53583765d5493bfdf5001b35/javascript)
 - [Making anagrams](https://www.hackerrank.com/challenges/ctci-making-anagrams/)
 - [Balanced Brackets](https://www.hackerrank.com/challenges/balanced-brackets/problem)
+- [Queue using 2 stacks](https://www.hackerrank.com/challenges/ctci-queue-using-two-stacks/)
