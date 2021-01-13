@@ -39,3 +39,4 @@ npm test
 - [Balanced Brackets](https://www.hackerrank.com/challenges/balanced-brackets/problem)
 - [Queue using 2 stacks](https://www.hackerrank.com/challenges/ctci-queue-using-two-stacks/)
 - [Array -> Left rotation](https://www.hackerrank.com/challenges/ctci-array-left-rotation/problem)
+- [Students Candies](https://www.hackerrank.com/challenges/candies)
