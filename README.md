@@ -7,3 +7,4 @@ Coding repository for the languages that I'm learning or trying to master
 - [Clojure](/clojure_)
 - [C#](/csharp)
 - [Javascript](/javascript)
+- [Python](/python)

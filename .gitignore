@@ -56,3 +56,9 @@ scala/.bloop
 scala/.scalafmt.conf
 scala/.ammonite
 scala/src/main/scala/scala.worksheet.sc
+
+## Python
+python/__pycache__
+python/.pytest_cache
+python/.vscode
+python/tddvenv
