@@ -4,9 +4,9 @@ All the Kata code here is tested
 
 ## Prerequisites
 
-[Python 3](https://www.python.org/)
-[Pip](https://pypi.org/project/pip/)
-[Pytest](https://pypi.org/project/pytest/)
+- [Python 3](https://www.python.org/)
+- [Pip](https://pypi.org/project/pip/)
+- [Pytest](https://pypi.org/project/pytest/)
 
 To run all the test
 
