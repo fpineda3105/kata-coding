@@ -20,3 +20,4 @@ pytest
 - [Simple permutations](https://www.hackerrank.com/challenges/list-comprehensions/problem)
 - [Find divisors](https://www.codewars.com/kata/544aed4c4a30184e960010f4)
 - [Counting vowels](https://www.codewars.com/kata/54ff3102c1bad923760001f3)
+- [Vasya - Clerk](https://www.codewars.com/kata/555615a77ebc7c2c8a0000b8)
