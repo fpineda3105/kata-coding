@@ -12,4 +12,8 @@ def namelist(names):
         return ''
     else:
         only_names = list(map(lambda name: name['name'], names))
-        return transform(only_names)        
+        return transform(only_names)      
+    
+letters = ['a', 'b', 'c']
+for ii,x in enumerate(letters):
+    print(ii, ": ", x)  
