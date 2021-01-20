@@ -24,3 +24,4 @@ pytest
 - [Triple Sum](https://www.hackerrank.com/challenges/triple-sum/)
 - [Minimun time required](https://www.hackerrank.com/challenges/minimum-time-required/)
 - [Removes duplicates ordered array](https://leetcode.com/explore/learn/card/fun-with-arrays/526/deleting-items-from-an-array/)
+- [Searching for Items in array](https://leetcode.com/explore/learn/card/fun-with-arrays/527/searching-for-items-in-an-array/)
