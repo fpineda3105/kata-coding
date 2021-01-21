@@ -26,3 +26,4 @@ pytest
 - [Removes duplicates ordered array](https://leetcode.com/explore/learn/card/fun-with-arrays/526/deleting-items-from-an-array/)
 - [Searching for Items in array](https://leetcode.com/explore/learn/card/fun-with-arrays/527/searching-for-items-in-an-array/)
 - [Crush - Array manipulation](https://www.hackerrank.com/challenges/crush/problem)
+- [Mark and toys](https://www.hackerrank.com/challenges/mark-and-toys/problem)
