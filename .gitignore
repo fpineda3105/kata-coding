@@ -62,3 +62,4 @@ python/__pycache__
 python/.pytest_cache
 python/.vscode
 python/tddvenv
+python/worksheet.py
