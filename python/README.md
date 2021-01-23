@@ -28,3 +28,4 @@ pytest
 - [Crush - Array manipulation](https://www.hackerrank.com/challenges/crush/problem)
 - [Mark and toys](https://www.hackerrank.com/challenges/mark-and-toys/problem)
 - [Largest rectangle](https://www.hackerrank.com/challenges/largest-rectangle/problem)
+- [Special String Again](https://www.hackerrank.com/challenges/special-palindrome-again/)
