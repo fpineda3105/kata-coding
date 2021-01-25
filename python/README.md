@@ -29,3 +29,4 @@ pytest
 - [Mark and toys](https://www.hackerrank.com/challenges/mark-and-toys/problem)
 - [Largest rectangle](https://www.hackerrank.com/challenges/largest-rectangle/problem)
 - [Special String Again](https://www.hackerrank.com/challenges/special-palindrome-again/)
+- [castle on the grid](https://www.hackerrank.com/challenges/castle-on-the-grid/problem)
