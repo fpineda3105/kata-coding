@@ -30,3 +30,4 @@ pytest
 - [Largest rectangle](https://www.hackerrank.com/challenges/largest-rectangle/problem)
 - [Special String Again](https://www.hackerrank.com/challenges/special-palindrome-again/)
 - [castle on the grid](https://www.hackerrank.com/challenges/castle-on-the-grid/problem)
+- [Lucky balance](https://www.hackerrank.com/challenges/luck-balance/)
