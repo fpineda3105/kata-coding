@@ -31,3 +31,4 @@ pytest
 - [Special String Again](https://www.hackerrank.com/challenges/special-palindrome-again/)
 - [castle on the grid](https://www.hackerrank.com/challenges/castle-on-the-grid/problem)
 - [Lucky balance](https://www.hackerrank.com/challenges/luck-balance/)
+- [Project Euler 230 - Fibonacci Words](https://www.hackerrank.com/contests/projecteuler/challenges/euler230/problem)
