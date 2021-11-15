@@ -6,7 +6,11 @@ on:
   push:
     paths:
     - 'elixir/**'  
-    branches: main
+  pull_request:
+    paths:
+    - 'elixir/**'
+    branches:
+      - main
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -14,14 +18,23 @@ jobs:
   ci:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-elixir@v1
-        with:
-          otp-version: '22.2'
-          elixir-version: '1.9.4'
-      - run: cd elixir
-      - run: mix deps.get
-      - run: mix test --trace --color
+    - uses: actions/checkout@v2
+    - name: Set up Elixir
+      uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+      with:
+        elixir-version: '1.12.3' # Define the elixir version [required]
+        otp-version: '24.1' # Define the OTP version [required]
+    - name: Restore dependencies cache
+      uses: actions/cache@v2
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+    - name: Install dependencies
+      working-directory: ./elixir
+      run: mix deps.get
+    - name: Run tests
+      working-directory: ./elixir
+      run: mix test --trace --color
