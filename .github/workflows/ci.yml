@@ -32,9 +32,9 @@ jobs:
         path: deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
-    - name: change elixir folder
-      run: cd elixir
     - name: Install dependencies
+      working-directory: ./elixir
       run: mix deps.get
     - name: Run tests
+      working-directory: ./elixir
       run: mix test --trace --color
