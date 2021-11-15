@@ -9,5 +9,6 @@ defmodule BasicCollectionsTest do
 
   test "should filter odds" do
     assert filter_odds([1,2,3,4,5]) == [1,3,5]
+    assert filter_odds([3,4,5,6,7]) == [3,5,7]
   end
 end
